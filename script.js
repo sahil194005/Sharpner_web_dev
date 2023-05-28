@@ -23,6 +23,11 @@
 
 // let title = document.querySelector('.container')
 // title.style.border = '10px solid black'
-let item = document.querySelector('#items')
-item.children[2].style.backgroundColor = 'green'
-item.style.fontWeight = 'bold'
+// let item = document.querySelector('#items')
+// item.children[2].style.backgroundColor = 'green'
+// item.style.fontWeight = 'bold'
+let li = document.createElement('li')
+let ul = document.querySelector('#items')
+li.textContent = 'item5'
+li.classList = 'list-group-item'
+ul.appendChild(li)
