@@ -34,15 +34,38 @@
 
 
 //making the 3rd item invisible and 2nd item green background color
-let items = document.querySelector('#items')
-items.children[1].style.backgroundColor = 'green'
-items.children[2].style.display = 'none'
+// let items = document.querySelector('#items')
+// items.children[1].style.backgroundColor = 'green'
+// items.children[2].style.display = 'none'
 
-//changing font color to green for 2nd item and changing the background to green for all odd items
-let item = document.querySelectorAll('.list-group-item')
-item[1].style.color = 'green'
-for(let i = 0;i<item.length;i++){
-    if(i%2!=0){
-        item[i].style.backgroundColor = 'green'
-    }
-}
+// //changing font color to green for 2nd item and changing the background to green for all odd items
+// let item = document.querySelectorAll('.list-group-item')
+// item[1].style.color = 'green'
+// for(let i = 0;i<item.length;i++){
+//     if(i%2!=0){
+//         item[i].style.backgroundColor = 'green'
+//     }
+// }
+
+
+
+let item =  document.querySelector('#items')
+console.log(item.parentElement)
+console.log(item.lastElementChild)
+console.log(item.lastChild)
+console.log(item.firstElementChild)
+console.log(item.firstChild)
+let newitem = document.createElement('li')
+newitem.setAttribute('class','list-group-item')
+let text = document.createTextNode('item 5')
+newitem.appendChild(text)
+item.appendChild(newitem)
+console.log(item.nextElementSibling)
+console.log(item.nextSibling)
+console.log(item.previousElementSibling)
+console.log(item.previousSibling)
+
+
+
+
+
