@@ -17,9 +17,12 @@
 // let title = (document.getElementById('header-title'))
 // console.log(title)
 // title.innerHTML = '<h2>puts inside h1 </h2>'
-let heading  = document.querySelector('.title')
-heading.style.color = 'green'
-heading.style.fontWeight = 'bold'
+// let heading  = document.querySelector('.title')
+// heading.style.color = 'green'
+// heading.style.fontWeight = 'bold'
 
-let title = document.querySelector('.container')
-title.style.border = '10px solid black'
+// let title = document.querySelector('.container')
+// title.style.border = '10px solid black'
+let item = document.querySelector('#items')
+item.children[2].style.backgroundColor = 'green'
+item.style.fontWeight = 'bold'
