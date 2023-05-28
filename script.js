@@ -26,8 +26,23 @@
 // let item = document.querySelector('#items')
 // item.children[2].style.backgroundColor = 'green'
 // item.style.fontWeight = 'bold'
-let li = document.createElement('li')
-let ul = document.querySelector('#items')
-li.textContent = 'item5'
-li.classList = 'list-group-item'
-ul.appendChild(li)
+// let li = document.createElement('li')
+// let ul = document.querySelector('#items')
+// li.textContent = 'item5'
+// li.classList = 'list-group-item'
+// ul.appendChild(li)
+
+
+//making the 3rd item invisible and 2nd item green background color
+let items = document.querySelector('#items')
+items.children[1].style.backgroundColor = 'green'
+items.children[2].style.display = 'none'
+
+//changing font color to green for 2nd item and changing the background to green for all odd items
+let item = document.querySelectorAll('.list-group-item')
+item[1].style.color = 'green'
+for(let i = 0;i<item.length;i++){
+    if(i%2!=0){
+        item[i].style.backgroundColor = 'green'
+    }
+}
