@@ -49,12 +49,33 @@ function displayDetails() {
   if (details && details.length > 0) {
     let ul = document.createElement("ul");
 
-    details.forEach((detail) => {
+    details.forEach((detail, index) => {
       let li = document.createElement("li");
       li.textContent = `Name: ${detail.name}, Email: ${detail.email}, Phone: ${detail.phoneNo}`;
+
+      let deleteButton = document.createElement("button");
+      deleteButton.textContent = "Delete";
+      deleteButton.addEventListener("click", () => {
+        deleteDetail(index);
+      });
+
+      li.appendChild(deleteButton);
       ul.appendChild(li);
     });
 
     detailsContainer.appendChild(ul);
+  }
+}
+
+function deleteDetail(index) {
+  let details = JSON.parse(localStorage.getItem("details"));
+
+  if (details && details.length > index) {
+    details.splice(index, 1);
+
+    let myobj_string = JSON.stringify(details);
+    localStorage.setItem("details", myobj_string);
+
+    displayDetails();
   }
 }
