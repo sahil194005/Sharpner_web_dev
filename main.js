@@ -1,81 +1,107 @@
-let nameInput = document.querySelector("#name-input");
-let emailInput = document.querySelector("#email-input");
-let phoneInput = document.querySelector("#phoneNo-input");
+let nameInput = document.querySelector("#name-input")
+let emailInput = document.querySelector("#email-input")
+let phoneInput = document.querySelector("#phoneNo-input")
+let submitBtn = document.querySelector("#submit")
+let data = document.querySelector("#details-container")
 
-let submit = document.querySelector("#submit");
-submit.addEventListener("click", onsubmit);
+submitBtn.addEventListener("click", onsubmit)
 
 function onsubmit(e) {
-  e.preventDefault();
-  let name_val = nameInput.value;
-  let email_val = emailInput.value;
-  let phone_val = phoneInput.value;
+  e.preventDefault()
+
   let myobj = {
-    name: name_val,
-    email: email_val,
-    phoneNo: phone_val,
-  };
+    name: nameInput.value,
+    email: emailInput.value,
+    phone: phoneInput.value,
+  }
 
-  if (localStorage.getItem("details")) {
-    let details = JSON.parse(localStorage.getItem("details"));
-    let myArray = details;
-
-    myArray.push(myobj);
-
-    myobj_string = JSON.stringify(myArray);
-    localStorage.setItem("details", myobj_string);
+  let existingData = localStorage.getItem("details")
+  if (existingData) {
+    let MyArr = JSON.parse(existingData)
+    MyArr.push(myobj)
+    let MyArrString = JSON.stringify(MyArr)
+    localStorage.setItem("details", MyArrString)
   } else {
-    let myArray = [];
-    myArray.push(myobj);
-
-    myobj_string = JSON.stringify(myArray);
-    localStorage.setItem("details", myobj_string);
+    let MyArr = []
+    MyArr.push(myobj)
+    localStorage.setItem("details", JSON.stringify(MyArr))
   }
-
-  nameInput.value = "";
-  emailInput.value = "";
-  phoneInput.value = "";
-
-  // Display the details in an unordered list
-  displayDetails();
+  nameInput.value = ""
+  emailInput.value = ""
+  phoneInput.value = ""
+  creatingList()
 }
 
-function displayDetails() {
-  let detailsContainer = document.getElementById("details-container");
-  detailsContainer.innerHTML = ""; // Clear the container before adding new details
-
-  let details = JSON.parse(localStorage.getItem("details"));
-
-  if (details && details.length > 0) {
-    let ul = document.createElement("ul");
-
-    details.forEach((detail, index) => {
-      let li = document.createElement("li");
-      li.textContent = `Name: ${detail.name}, Email: ${detail.email}, Phone: ${detail.phoneNo}`;
-
-      let deleteButton = document.createElement("button");
-      deleteButton.textContent = "Delete";
-      deleteButton.addEventListener("click", () => {
-        deleteDetail(index);
-      });
-
-      li.appendChild(deleteButton);
-      ul.appendChild(li);
-    });
-
-    detailsContainer.appendChild(ul);
+function creatingList() {
+  if (data.firstElementChild) {
+    data.firstElementChild.remove()
   }
+
+  let newUL = document.createElement("ul")
+  let existingData = JSON.parse(localStorage.getItem("details"))
+  for (let i = 0; i < existingData.length; i++) {
+    let newli = document.createElement("li")
+    let nameSpan = document.createElement("span")
+    let emailSpan = document.createElement("span")
+    let phoneSpan = document.createElement("span")
+    nameSpan.style.display = "none"
+    emailSpan.style.display = "none"
+    phoneSpan.style.display = "none"
+    nameSpan.textContent = existingData[i].name
+    emailSpan.textContent = existingData[i].email
+    phoneSpan.textContent = existingData[i].phone
+    newli.appendChild(nameSpan)
+    newli.appendChild(emailSpan)
+    newli.appendChild(phoneSpan)
+    newli.appendChild(
+      document.createTextNode(
+        `name: ${existingData[i].name}, email: ${existingData[i].email}, phone: ${existingData[i].phone}`
+      )
+    )
+    let delbtn = document.createElement("button")
+    let editbtn = document.createElement("button")
+    editbtn.textContent = "edit"
+    delbtn.textContent = "delete"
+    newli.appendChild(delbtn)
+    newli.appendChild(editbtn)
+    newUL.appendChild(newli)
+    delbtn.addEventListener("click", delitem)
+    editbtn.addEventListener("click", edititem)
+  }
+
+  data.appendChild(newUL)
 }
 
-function deleteDetail(index) {
-  let details = JSON.parse(localStorage.getItem("details"));
+function edititem(e) {
+  e.preventDefault()
+  e.preventDefault()
+  let listItem = e.target.parentElement
+  let nameElement = listItem.querySelector("span name")
+  let emailElement = listItem.querySelector("span email")
+  let a = listItem.children[0].textContent
+  let b = listItem.children[1].textContent
+  let c = listItem.children[2].textContent
+  console.log(a, b, c)
+  nameInput.value = a
+  emailInput.value = b
+  phoneInput.value = c
 
-  if (details && details.length > index) {
-    details.splice(index, 1);
+  let name = listItem.children[0].textContent
+  listItem.remove()
 
-    let myobj_string = JSON.stringify(details);
-    localStorage.setItem("details", myobj_string);
+  let existingData = JSON.parse(localStorage.getItem("details"))
+  let updatedData = existingData.filter((item) => item.name !== name)
+  localStorage.setItem("details", JSON.stringify(updatedData))
+}
 
-    displayDetails();
-  }
+function delitem(e) {
+  e.preventDefault()
+  let listItem = e.target.parentElement
+  let nameElement = listItem.querySelector("span")
+  let name = nameElement.textContent
+  listItem.remove()
+
+  let existingData = JSON.parse(localStorage.getItem("details"))
+  let updatedData = existingData.filter((item) => item.name !== name)
+  localStorage.setItem("details", JSON.stringify(updatedData))
 }
